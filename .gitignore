@@ -1,0 +1,30 @@
+.venv/
+__pycache__/
+*.py[cod]
+logs/
+reports/
+data/trading.db
+data/historical/
+# Credenciales. `secrets.yaml` sin anclar cubre cualquier ruta; la linea
+# explicita esta para que se vea de un vistazo cual es el fichero real.
+.env
+secrets.yaml
+config/secrets.yaml
+.pytest_cache/
+.superpowers/
+*.egg-info/
+
+# Cache de zonas de soporte y descargas, generadas por el bot. La barra inicial ancla el
+# patron a la raiz: sin ella tambien tapaba src/bot/data/ y tests/data/, que si van al
+# repositorio.
+/data/
+
+# Historicos descargados de IBKR; se regeneran con tools/download_ibkr_history.py
+data/history_real.csv
+
+# Caches del visor: se regeneran solas y son grandes. `_viewer_streams` guarda los flujos de
+# velas reconstruidos, y los dos JSON el indice de operaciones y de senales.
+_viewer_streams/
+_viewer_trades.json
+_viewer_signals.json
+*.csv.index.json

@@ -1,0 +1,28 @@
+[project]
+name = "bot-trading-beta"
+version = "0.1.0-beta"
+description = "Nucleo de un bot de trading intradia: motor, bus de eventos, indicadores incrementales y gestion de riesgo. Version publica parcial."
+requires-python = ">=3.12"
+# Esta version publica NO incluye el adaptador de IBKR ni los notificadores, asi que no
+# necesita `ib_async` ni `requests`: todo lo que viaja aqui corre contra el broker simulado
+# y el feed de fichero.
+dependencies = ["numpy", "pandas", "PyYAML"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers -m 'not integration'"
+markers = ["integration: requiere conexión real a IBKR; excluida por defecto"]
+# Un UserWarning del bróker señala un caso que el modelo de ejecución no cubre (venta
+# parcial, posición sin vela con la que liquidarse). Convertirlo en error impide que la
+# batería los normalice: si una prueba lo espera, tiene que decirlo con `pytest.warns`.
+filterwarnings = ["error::UserWarning"]
